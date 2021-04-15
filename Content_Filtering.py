@@ -14,9 +14,9 @@ indices = pd.Series(df.index, index=df['contentId'])
 
 
 def get_recommendations(contentId):
-    idx = indices[contentId]
+    idx = indices[int(contentId)]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:11]
     _indices = [i[0] for i in sim_scores]
-    return df['contentId'].iloc[_indices]
+    return df[[ "title","url", "lang", "contentId","eventType","total_events"]].iloc[_indices].values.tolist()
